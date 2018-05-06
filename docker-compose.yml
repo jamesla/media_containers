@@ -60,7 +60,7 @@ services:
     volumes:
       - /volume1/containers/plex:/config
       - /volume1/media/movies:/data/movies
-      - /volume1/media/tv:/data/v
+      - /volume1/media/tv:/data/tvshows
     network_mode: host
   jenkins:
     image: jenkins/jenkins

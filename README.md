@@ -10,9 +10,6 @@ Create required external docker volumes and ensure media mountpoints exist on ho
 docker-compose up -d
 ```
 
-## Upgrade to latest version
+## Upgrade all containers to latest version
 
-
-```
-docker-compose down && docker-compose up --build -d
-```
+./upgrade_containers.sh
