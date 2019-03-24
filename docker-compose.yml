@@ -9,6 +9,8 @@ volumes:
     external: true
   sonarr_config:
     external: true
+  jackett_config:
+    external: true
 
 services:
   sonarr:
@@ -24,6 +26,7 @@ services:
       - sonarr_config:/config
       - /volume1/media/tv:/tv
       - /volume1/downloads:/downloads
+    restart: unless-stopped
   radarr:
     image: linuxserver/radarr
     container_name: radarr
@@ -37,6 +40,7 @@ services:
       - radarr_config:/config
       - /volume1/media/movies:/movies
       - /volume1/downloads:/downloads
+    restart: unless-stopped
   nzbget:
     image: linuxserver/nzbget
     container_name: nzbget
@@ -49,6 +53,7 @@ services:
     volumes:
       - nzbget_config:/config
       - /volume1/downloads:/downloads
+    restart: unless-stopped
   plex:
     image: linuxserver/plex
     container_name: plex
@@ -62,6 +67,7 @@ services:
       - /volume1/media/movies:/data/movies
       - /volume1/media/tv:/data/tvshows
     network_mode: host
+    restart: unless-stopped
   jenkins:
     image: jenkins/jenkins
     container_name: jenkins
@@ -70,3 +76,17 @@ services:
       - 50000:50000
     volumes:
       - jenkins_home:/var/jenkins_home
+    restart: unless-stopped
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Australia/Sydney
+    volumes:
+      - jackett_config:/config
+      # - <path to blackhole>:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
